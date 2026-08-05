@@ -1,0 +1,13 @@
+body { font-family: sans-serif; margin: 0; padding: 0; background: #111; color: #fff; }
+header { padding: 20px; text-align: center; }
+input { padding: 8px; width: 60%; }
+button { padding: 8px 12px; }
+#results { display: flex; flex-wrap: wrap; gap: 15px; padding: 20px; justify-content: center; }
+.movie-card { background: #222; width: 160px; border-radius: 8px; overflow: hidden; text-align: center; }
+.movie-card img { width: 100%; }
+.movie-card p { font-size: 14px; padding: 5px; }.modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: flex; justify-content: center; align-items: center; }
+.hidden { display: none; }
+.modal-content { background: #222; padding: 20px; border-radius: 10px; max-width: 400px; width: 85%; position: relative; max-height: 80vh; overflow-y: auto; }
+#closeModal { position: absolute; top: 10px; right: 15px; cursor: pointer; font-size: 24px; }
+.modal-content img { width: 100%; border-radius: 6px; margin-bottom: 10px; }.watch-btn { display: block; width: 100%; margin-top: 12px; padding: 12px; background: #e50914; color: #fff; border: none; border-radius: 6px; font-weight: bold; text-align: center; text-decoration: none; cursor: pointer; font-size: 15px; }
+.modal-content.small { max-width: 300px; text-align: center; }
