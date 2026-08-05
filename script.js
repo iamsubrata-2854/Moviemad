@@ -96,10 +96,13 @@ async function showDetails(id) {
 
   // New click logic for the watch button inside the modal
   watchBtn.onclick = () => {
-    const link = movieLinks[movie.imdbID];
-    if (link) {
-      window.open(link, "_blank");
-    } else {
+    const link = movieLinks[movie.imdbID]let movieLinks = {};
+
+// Load links from links.json when the site opens
+fetch("links.json")
+  .then(res => res.json())
+  .then(data => { movieLinks = data; })
+  .catch(err => console.error("Could not load links.json", err)); else {
       const formBase = "https://docs.google.com/forms/d/e/1FAIpQLSd_g1K7M_BTf_zoQVcNAdihALtz0RZ5NQkg8gdf8-uZY0Bkbg/viewform";
       const prefill = `?usp=pp_url&entry.123456=${encodeURIComponent(movie.Title)}&entry.789012=${encodeURIComponent(movie.Year)}`;
       requestBtn.href = formBase + prefill;
