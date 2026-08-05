@@ -12,11 +12,14 @@ const comingSoonModal = document.getElementById("comingSoonModal");
 const closeComingSoon = document.getElementById("closeComingSoon");
 const requestBtn = document.getElementById("requestBtn");
 
-// --- NEW MANUAL LINK DATABASE ---
-const movieLinks = {
-  "tt1375666": "https://netflix.com",   // Inception
-  "tt0111161": "https://primevideo.com" // Shawshank Redemption
-};
+// Initialize movieLinks object and load links dynamically from links.json
+let movieLinks = {};
+
+fetch("links.json")
+  .then(res => res.json())
+  .then(data => { movieLinks = data; })
+  .catch(err => console.error("Could not load links.json", err));
+
 // Curated list of popular movie IMDb IDs — add/change as you like
 const popularMovies = [
   "tt1375666", // Inception
@@ -28,10 +31,10 @@ const popularMovies = [
   "tt0816692", // Interstellar
   "tt6751668"  // Parasite
 ];
+
 // --- EVENT LISTENERS ---
 searchBtn.addEventListener("click", searchMovies);
 closeModal.addEventListener("click", () => modal.classList.add("hidden"));
-// New listener to close the coming soon modal
 closeComingSoon.addEventListener("click", () => comingSoonModal.classList.add("hidden"));
 
 // --- FUNCTIONS ---
@@ -60,6 +63,7 @@ async function searchMovies() {
     results.appendChild(card);
   });
 }
+
 async function loadPopularMovies() {
   results.innerHTML = "Loading popular movies...";
   results.innerHTML = "";
@@ -79,6 +83,7 @@ async function loadPopularMovies() {
     results.appendChild(card);
   }
 }
+
 // --- UPDATED SHOWDETAILS FUNCTION ---
 async function showDetails(id) {
   const res = await fetch(`https://www.omdbapi.com/?apikey=${API_KEY}&i=${id}&plot=full`);
@@ -96,13 +101,11 @@ async function showDetails(id) {
 
   // New click logic for the watch button inside the modal
   watchBtn.onclick = () => {
-    const link = movieLinks[movie.imdbID]let movieLinks = {};
-
-// Load links from links.json when the site opens
-fetch("links.json")
-  .then(res => res.json())
-  .then(data => { movieLinks = data; })
-  .catch(err => console.error("Could not load links.json", err)); else {
+    const link = movieLinks[movie.imdbID];
+    
+    if (link) {
+      window.open(link, "_blank");
+    } else {
       const formBase = "https://docs.google.com/forms/d/e/1FAIpQLSd_g1K7M_BTf_zoQVcNAdihALtz0RZ5NQkg8gdf8-uZY0Bkbg/viewform";
       const prefill = `?usp=pp_url&entry.123456=${encodeURIComponent(movie.Title)}&entry.789012=${encodeURIComponent(movie.Year)}`;
       requestBtn.href = formBase + prefill;
@@ -111,5 +114,6 @@ fetch("links.json")
     }
   };
 }
+
 // Load popular movies when the page first opens
 loadPopularMovies();
