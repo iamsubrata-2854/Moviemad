@@ -17,7 +17,17 @@ const movieLinks = {
   "tt1375666": "https://netflix.com",   // Inception
   "tt0111161": "https://primevideo.com" // Shawshank Redemption
 };
-
+// Curated list of popular movie IMDb IDs — add/change as you like
+const popularMovies = [
+  "tt1375666", // Inception
+  "tt0111161", // The Shawshank Redemption
+  "tt0468569", // The Dark Knight
+  "tt0137523", // Fight Club
+  "tt0109830", // Forrest Gump
+  "tt0110912", // Pulp Fiction
+  "tt0816692", // Interstellar
+  "tt6751668"  // Parasite
+];
 // --- EVENT LISTENERS ---
 searchBtn.addEventListener("click", searchMovies);
 closeModal.addEventListener("click", () => modal.classList.add("hidden"));
@@ -50,7 +60,25 @@ async function searchMovies() {
     results.appendChild(card);
   });
 }
+async function loadPopularMovies() {
+  results.innerHTML = "Loading popular movies...";
+  results.innerHTML = "";
 
+  for (const id of popularMovies) {
+    const res = await fetch(`https://www.omdbapi.com/?apikey=${API_KEY}&i=${id}`);
+    const movie = await res.json();
+    if (movie.Response === "False") continue;
+
+    const card = document.createElement("div");
+    card.className = "movie-card";
+    card.innerHTML = `
+      <img src="${movie.Poster !== "N/A" ? movie.Poster : 'https://via.placeholder.com/160x230?text=No+Image'}">
+      <p>${movie.Title} (${movie.Year})</p>
+    `;
+    card.addEventListener("click", () => showDetails(movie.imdbID));
+    results.appendChild(card);
+  }
+}
 // --- UPDATED SHOWDETAILS FUNCTION ---
 async function showDetails(id) {
   const res = await fetch(`https://www.omdbapi.com/?apikey=${API_KEY}&i=${id}&plot=full`);
@@ -80,3 +108,5 @@ async function showDetails(id) {
     }
   };
 }
+// Load popular movies when the page first opens
+loadPopularMovies();
