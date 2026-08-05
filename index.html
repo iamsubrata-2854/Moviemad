@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Movie Explorer</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Movie Explorer</h1>
+    <input type="text" id="searchInput" placeholder="Search a movie...">
+    <button id="searchBtn">Search</button>
+  </header>
+
+  <main id="results"></main>
+<div id="modal" class="modal hidden">
+  <div class="modal-content">
+    <span id="closeModal">&times;</span>
+    <div id="modalBody"></div>
+    <button id="watchBtn" class="watch-btn">▶ WATCH MOVIE</button>
+  </div>
+</div>
+<div id="comingSoonModal" class="modal hidden">
+  <div class="modal-content small">
+    <span id="closeComingSoon">&times;</span>
+    <p>🎬 Coming Soon — link not available yet.</p>
+    <a id="requestBtn" class="watch-btn" href="#">Request Movie Link</a>
+  </div>
+</div>
+  <script src="script.js"></script>
+</body>
+</html>
